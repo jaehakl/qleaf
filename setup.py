@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='qleaf',
-    version='0.0.11',
+    version='0.0.12',
     description='Productive GUI Framework for Python',
     author='Jaehak Lee',
     author_email='leejaehak87@gmail.com',
