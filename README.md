@@ -1,2 +1,7 @@
-# qleaf
-Productive GUI Framework for Python
+# QLeaf
+
+### Installation
+
+```
+pip install qleaf
+```
