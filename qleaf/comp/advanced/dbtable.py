@@ -5,7 +5,7 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 
 import pandas as pd
-from turtletree.database import DB
+from matform.database import DB
 
 from ...core.abstract_comp import AbstractComp
 

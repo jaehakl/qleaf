@@ -8,7 +8,7 @@ from ..comp.chart.lineGraph import LineGraphComp
 from ..comp.chart.imShow import ImShowComp
 from ..core.abstract_comp import AbstractComp
 from ..core.prop import Prop
-from turtletree.array.labeledTensor import LabeledTensor
+from matform.array.labeledTensor import LabeledTensor
 
 
 class ChartWithList(AbstractComp):

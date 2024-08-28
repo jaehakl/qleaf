@@ -4,8 +4,8 @@ import time, os, sys
 
 from PySide6.QtCore import QThread, Signal
 
-from turtletree.meta_singleton import MetaSingleton
-from turtletree.subprocess import ClientAPI
+from matform.meta_singleton import MetaSingleton
+from matform.subprocess import ClientAPI
 import platform
 
 class SubprocDict(metaclass=MetaSingleton):

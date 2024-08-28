@@ -1,6 +1,6 @@
 # Copyright (C) 2023 Jaehak Lee
 
-from turtletree.meta_singleton import MetaSingleton
+from matform.meta_singleton import MetaSingleton
 from ..prop import Prop
 
 class State(metaclass=MetaSingleton):
