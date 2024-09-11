@@ -1,6 +1,6 @@
 # Copyright (C) 2023 Jaehak Lee
 
-__version__ = '0.0.14'
+__version__ = '0.0.16'
 
 from . import comp
 from . import core

@@ -95,28 +95,34 @@ class ImShowCompFromLabeledTensor(AbstractComp):
         for i, data_name in enumerate(data_dict.keys()):
             data_lt = data_dict[data_name]["data"]
             
-            x_label = data_lt.get_labels()[0]
-            y_label = data_lt.get_labels()[1]
-            x_label_name = data_lt.get_label_names()[0]
-            y_label_name = data_lt.get_label_names()[1]    
 
             plot = self.canvas.figure.add_subplot(rows, cols, i+1)
             tensor = data_lt.data
-            if len(tensor.shape) == 4:
-                tensor = tensor.mean(axis=2).mean(axis=2).real
-            elif len(tensor.shape) == 3:
-                tensor = tensor.mean(axis=2).real
-            elif len(tensor.shape) == 2:
+            if len(tensor.shape) == 2:
                 tensor = tensor.real
             else:
                 raise ValueError("Invalid tensor shape")
-            pc = plot.imshow(tensor, cmap=cmap)
+
+            if (tensor.shape[0] > tensor.shape[1]):
+                x_label = data_lt.get_labels()[0]
+                y_label = data_lt.get_labels()[1]
+                x_label_name = data_lt.get_label_names()[0]
+                y_label_name = data_lt.get_label_names()[1]    
+                pc = plot.imshow(tensor.T, cmap=cmap)
+            else:
+                x_label = data_lt.get_labels()[1]
+                y_label = data_lt.get_labels()[0]
+                x_label_name = data_lt.get_label_names()[1]
+                y_label_name = data_lt.get_label_names()[0]    
+                pc = plot.imshow(tensor, cmap=cmap)
+
             cbar = self.canvas.figure.colorbar(pc,location='bottom')
             plot.set_title(data_name)
-            plots.append(plot)
-        for plot in plots:
             plot.set_xlabel(x_label_name)
             plot.set_ylabel(y_label_name)
+
+            plots.append(plot)
+
         self.canvas.draw()
 
 
