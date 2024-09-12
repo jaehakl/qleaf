@@ -93,35 +93,45 @@ class ImShowCompFromLabeledTensor(AbstractComp):
         rows = int(np.ceil(len_data / cols))
 
         for i, data_name in enumerate(data_dict.keys()):
-            data_lt = data_dict[data_name]["data"]
-            
+            data_lt = data_dict[data_name]["data"]        
+            tensor = data_lt.data.real
 
-            plot = self.canvas.figure.add_subplot(rows, cols, i+1)
-            tensor = data_lt.data
-            if len(tensor.shape) == 2:
-                tensor = tensor.real
+            if len(tensor.shape) == 1:
+                plot = self.canvas.figure.add_subplot(rows, cols, i+1)
+                x_label = data_lt.get_labels()[0]
+                x_label_name = data_lt.get_label_names()[0]
+                pc = plot.plot(x_label, tensor)
+                plot.set_title(data_name)
+                plot.set_xlabel(x_label_name)
+                plot.set_ylabel("Value")
+                plots.append(plot)
+
+            elif len(tensor.shape) == 2:
+                plot = self.canvas.figure.add_subplot(rows, cols, i+1)
+                if (tensor.shape[0] > tensor.shape[1]):
+                    x_label = data_lt.get_labels()[0]
+                    y_label = data_lt.get_labels()[1]
+                    x_label_name = data_lt.get_label_names()[0]
+                    y_label_name = data_lt.get_label_names()[1]    
+                    pc = plot.imshow(tensor.T, cmap=cmap)
+                else:
+                    x_label = data_lt.get_labels()[1]
+                    y_label = data_lt.get_labels()[0]
+                    x_label_name = data_lt.get_label_names()[1]
+                    y_label_name = data_lt.get_label_names()[0]    
+                    pc = plot.imshow(tensor, cmap=cmap)
+
+                cbar = self.canvas.figure.colorbar(pc,location='bottom')
+                plot.set_title(data_name)
+                plot.set_xlabel(x_label_name)
+                plot.set_ylabel(y_label_name)
+
+                plots.append(plot)
+
             else:
                 raise ValueError("Invalid tensor shape")
 
-            if (tensor.shape[0] > tensor.shape[1]):
-                x_label = data_lt.get_labels()[0]
-                y_label = data_lt.get_labels()[1]
-                x_label_name = data_lt.get_label_names()[0]
-                y_label_name = data_lt.get_label_names()[1]    
-                pc = plot.imshow(tensor.T, cmap=cmap)
-            else:
-                x_label = data_lt.get_labels()[1]
-                y_label = data_lt.get_labels()[0]
-                x_label_name = data_lt.get_label_names()[1]
-                y_label_name = data_lt.get_label_names()[0]    
-                pc = plot.imshow(tensor, cmap=cmap)
 
-            cbar = self.canvas.figure.colorbar(pc,location='bottom')
-            plot.set_title(data_name)
-            plot.set_xlabel(x_label_name)
-            plot.set_ylabel(y_label_name)
-
-            plots.append(plot)
 
         self.canvas.draw()
 
